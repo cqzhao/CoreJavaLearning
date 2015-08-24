@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import sun.util.calendar.BaseCalendar;
 import sun.util.calendar.CalendarDate;
@@ -11,20 +15,31 @@ import sun.util.calendar.CalendarDate;
 public class CalendarTest {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("Please input the date in form of yyyy-mm-dd");
-		String date = in.nextLine();
-		String[] datesplit = date.split("-");
-		int[] idate = new int[3];
-		if (datesplit.length == 3) {
-			for (int i = 0; i < 3; i++) {
-				idate[i] = Integer.parseInt(datesplit[i]);
-//				System.out.println(idate[i]);
-			}
-		} else {
-			System.out.println("Check ur input Infom.");
-			System.exit(-1);
+		System.out.println("Please input the date in form of yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = new GregorianCalendar();
+		Date date;
+		try {
+			date = df.parse(in.nextLine());
+			cal.setTime(date);
+			System.out.println(cal.getActualMaximum(cal.DATE));
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-		Calendar cal = new GregorianCalendar(idate[0], idate[1]-1, idate[2]);
+		
+//		String date = in.nextLine();
+//		String[] datesplit = date.split("-");
+//		int[] idate = new int[3];
+//		if (datesplit.length == 3) {
+//			for (int i = 0; i < 3; i++) {
+//				idate[i] = Integer.parseInt(datesplit[i]);
+////				System.out.println(idate[i]);
+//			}
+//		} else {
+//			System.out.println("Check ur input Infom.");
+//			System.exit(-1);
+//		}
+//		Calendar cal = new GregorianCalendar(idate[0], idate[1]-1, idate[2]);
 		print(cal);
 //		print2(cal);
 	}
@@ -38,16 +53,16 @@ public class CalendarTest {
 		cal2.set(cal2.DATE, 1);
 		start = cal2.get(cal2.DAY_OF_WEEK);
 		cal2.set(cal2.DATE,date);
-	    final int MONTH_LENGTH[]
-	            = {31,28,31,30,31,30,31,31,30,31,30,31}; // 0-based
-	    final int LEAP_MONTH_LENGTH[]
-	            = {31,29,31,30,31,30,31,31,30,31,30,31}; // 0-based
-		int monthLength = cal2.isLeapYear(cal.get(cal.YEAR))? LEAP_MONTH_LENGTH[cal.get(cal.MONTH)] : MONTH_LENGTH[cal.get(cal.MONTH)];
-				
-		
+//	    final int MONTH_LENGTH[]
+//	            = {31,28,31,30,31,30,31,31,30,31,30,31}; // 0-based
+//	    final int LEAP_MONTH_LENGTH[]
+//	            = {31,29,31,30,31,30,31,31,30,31,30,31}; // 0-based
+//		int monthLength = cal2.isLeapYear(cal.get(cal.YEAR))? LEAP_MONTH_LENGTH[cal.get(cal.MONTH)] : MONTH_LENGTH[cal.get(cal.MONTH)];
+//				
+		int monthLength = cal2.getActualMaximum(cal2.DATE);
 		System.out.println(head);
 		int jweek = 0;
-		for (int j = 0; j < start - 1; j++) {
+		for (int j = 1; j < start; j++) {
 			System.out.print("\t");
 			jweek++;
 		}

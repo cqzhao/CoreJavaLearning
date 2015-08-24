@@ -1,14 +1,28 @@
 package cqzhao.gui;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class FileTest {
 	public static void main(String[] args) {
-		File f1 = new File("/Users/lisa/Documents/workspace/JavaLearning");
-		printFile(f1, 0);
+		File f1 = null;
+		if(args.length == 0){
+			f1 = new File(".");
+		}else if(args.length == 1){
+			f1 = new File(args[0]);
+		}else{
+			System.out.println("Warning: Only the first directory is valid!");
+		}
+		try{
+			printFile(f1, 0);
+		}catch(FileNotFoundException e){
+			System.out.println(e.getMessage());
+		}
 	}
 	
-	public static void printFile(File f, int level){
+	public static void printFile(File f, int level) throws FileNotFoundException{
+		if(! f.exists()){
+			throw new FileNotFoundException(f.getName() + " is Not Found!");
+		}
 		for(int i=0;i<level;i++){
 			if(i==level-1){
 				System.out.print("|____");
